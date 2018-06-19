@@ -5,9 +5,9 @@
 *  讲解图数据在程序中的表示方法
 *  利用算法实现下一步的计算
 
-> 最终效果
+> 最终效果（如果gif卡顿请直接点击gif）  
 ![这里写图片描述](http://imglf5.nosdn.127.net/img/Z281REhERnhNZlVWTno5bk96U3FxUmQ0YnlPb09vU3RKMUp2ZjNpOEhWNC9uY2twa1RIVGR3PT0.gif)  
-> 打乱初始情况
+> 打乱初始情况（如果gif卡顿请直接点击gif）  
 ![这里写图片描述](http://imglf6.nosdn.127.net/img/Z281REhERnhNZlVWTno5bk96U3FxWFRPVXY5eUlVbUNWa0ZTdnZSOTRQK09laVlwWWw1WmxnPT0.gif)  
 
 ###  实现过程
