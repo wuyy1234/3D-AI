@@ -5,6 +5,11 @@
 *  讲解图数据在程序中的表示方法
 *  利用算法实现下一步的计算
 
+> 最终效果
+![这里写图片描述](http://imglf5.nosdn.127.net/img/Z281REhERnhNZlVWTno5bk96U3FxUmQ0YnlPb09vU3RKMUp2ZjNpOEhWNC9uY2twa1RIVGR3PT0.gif)  
+> 打乱初始情况
+![这里写图片描述](http://imglf6.nosdn.127.net/img/Z281REhERnhNZlVWTno5bk96U3FxWFRPVXY5eUlVbUNWa0ZTdnZSOTRQK09laVlwWWw1WmxnPT0.gif)  
+
 ###  实现过程
 *  加入协程
 > 在原来的魔鬼与牧师基础上修改，看到之前的架构发现要修改不少内容。  
@@ -69,7 +74,68 @@ for (int i = 3; i < 6; i++) {//priest
   }
 }
 ```
+> 根据上面获取的当前状态，依据下面的判断决定下一个最优路线  
+```
+if( (s[0]==1&&s[1]==3&&s[2]==0)||
+	(s[0]==-1&&s[1]==3&&s[2]==2)||
+	(s[0]==-1&&s[1]==3&&s[2]==3)||
+	(s[0]==1&&s[1]==0&&s[2]==1)||
+	(s[0]==-1&&s[1]==0&&s[2]==1)||
+	(s[0]==-1&&s[1]==3&&s[2]==0)||
+	(s[0]==-1&&s[1]==0&&s[2]==2)
+	){
+	mono.StartCoroutine(D());
+}
+else if((s[0]==-1&&s[1]==2&&s[2]==2)
+	){
+	mono.StartCoroutine(P());
+}
+else if((s[0]==-1&&s[1]==3&&s[2]==1)||
+	(s[0]==1&&s[1]==0&&s[2]==2)||
+	(s[0]==1&&s[1]==0&&s[2]==3)||
+	(s[0]==1&&s[1]==3&&s[2]==2)){
+	mono.StartCoroutine(DD());
 
-
+}
+else if((s[0]==1&&s[1]==3&&s[2]==1)||
+	(s[0]==1&&s[1]==2&&s[2]==2)){
+	mono.StartCoroutine(PP());
+}
+else if((s[0]==1&&s[1]==3&&s[2]==3)||
+	(s[0]==1&&s[1]==1&&s[2]==1)||
+	(s[0]==-1&&s[1]==1&&s[2]==1)){
+	mono.StartCoroutine(PD());
+}
+```
+> 下面实现各个动作集的代码(只列出PD，其余的类似)：
+```
+public IEnumerator PD(){
+	actionIsFinish = false;
+	actionManager.toBoatController ("priest", characters, boatObject);
+	while (!actionIsFinish) {
+		yield return null;
+	}
+	actionIsFinish = false;
+	actionManager.toBoatController ("devil", characters, boatObject);
+	while (!actionIsFinish) {
+		yield return null;
+	}
+	actionIsFinish = false;
+	actionManager.moveBoatController(boatObject);
+	while (!actionIsFinish) {
+		yield return null;
+	}
+	actionIsFinish = false;
+	actionManager.fromBoatController("devil", characters, boatObject);
+	while (!actionIsFinish) {
+		yield return null;
+	}
+	actionIsFinish = false;
+	actionManager.fromBoatController("priest", characters, boatObject);
+	while (!actionIsFinish) {
+		yield return null;
+	}
+}
+```
 
 
